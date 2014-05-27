@@ -1,0 +1,11 @@
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\bin\Debug\COMParam.exe.config
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\bin\Debug\COMParam.exe
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\bin\Debug\COMParam.pdb
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.csprojResolveAssemblyReference.cache
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.Form1.resources
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.Properties.Resources.resources
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.csproj.GenerateResource.Cache
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.exe
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\obj\Debug\COMParam.pdb
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\bin\Debug\OpenHardwareMonitorLib.dll
+c:\users\crow\documents\visual studio 2013\Projects\COMParam\COMParam\bin\Debug\OpenHardwareMonitorLib.pdb
