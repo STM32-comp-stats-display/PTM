@@ -35,7 +35,7 @@
           <Memory name="IROM2" type="ReadOnly" size="" startValue=""/>
           <Memory name="IRAM2" type="ReadWrite" size="0x00010000" startValue="0x10000000"/>
         </MemoryAreas>
-        <LocateLinkFile path="../../../../programy/coide/configuration/programdata/stm32discoveryvcp/arm-gcc-link.ld" type="0"/>
+        <LocateLinkFile path="../../configuration/programdata/stm32discoveryvcp/arm-gcc-link.ld" type="0"/>
       </Link>
       <Output>
         <Option name="OutputFileType" value="0"/>
@@ -85,16 +85,16 @@
     <File name="usb_lib/otg/usb_regs.h" path="usb_lib/otg/usb_regs.h" type="1"/>
     <File name="cmsis_lib/source/stm32f4xx_usart.c" path="cmsis_lib/source/stm32f4xx_usart.c" type="1"/>
     <File name="usb_lib/lcd_5110.c" path="../Demo_61_LCD_Nokia5110/ub_lib/lcd_5110.c" type="1"/>
-    <File name="usb_lib/otg/usb_defines.h" path="usb_lib/otg/usb_defines.h" type="1"/>
-    <File name="usb_lib/cdc" path="" type="2"/>
     <File name="usb_lib/core/usbd_req.c" path="usb_lib/core/usbd_req.c" type="1"/>
+    <File name="usb_lib/cdc" path="" type="2"/>
+    <File name="usb_lib/otg/usb_defines.h" path="usb_lib/otg/usb_defines.h" type="1"/>
     <File name="cmsis_boot" path="" type="2"/>
     <File name="usb_lib/cdc/usbd_cdc_vcp.c" path="usb_lib/cdc/usbd_cdc_vcp.c" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_usart.h" path="cmsis_lib/include/stm32f4xx_usart.h" type="1"/>
     <File name="usb_lib/otg/usb_dcd_int.c" path="usb_lib/otg/usb_dcd_int.c" type="1"/>
     <File name="usb_conf/usb_bsp.c" path="usb_conf/usb_bsp.c" type="1"/>
-    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis/core_cm4_simd.h" path="cmsis/core_cm4_simd.h" type="1"/>
+    <File name="cmsis_boot/stm32f4xx.h" path="cmsis_boot/stm32f4xx.h" type="1"/>
     <File name="cmsis_boot/startup" path="" type="2"/>
     <File name="cmsis_lib/source/stm32f4xx_spi.c" path="cmsis_lib/source/stm32f4xx_spi.c" type="1"/>
     <File name="usb_conf/usbd_conf.h" path="usb_conf/usbd_conf.h" type="1"/>
@@ -115,9 +115,9 @@
     <File name="usb_lib/core/usbd_core.c" path="usb_lib/core/usbd_core.c" type="1"/>
     <File name="cmsis_boot/startup/startup_stm32f4xx.c" path="cmsis_boot/startup/startup_stm32f4xx.c" type="1"/>
     <File name="usb_lib/core" path="" type="2"/>
-    <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
-    <File name="usb_conf" path="" type="2"/>
     <File name="usb_conf/usb_conf.h" path="usb_conf/usb_conf.h" type="1"/>
+    <File name="usb_conf" path="" type="2"/>
+    <File name="cmsis_lib/source/stm32f4xx_rcc.c" path="cmsis_lib/source/stm32f4xx_rcc.c" type="1"/>
     <File name="usb_lib/lcd_5110.h" path="../Demo_61_LCD_Nokia5110/ub_lib/lcd_5110.h" type="1"/>
     <File name="cmsis/core_cmInstr.h" path="cmsis/core_cmInstr.h" type="1"/>
     <File name="usb_lib/otg/usb_core.c" path="usb_lib/otg/usb_core.c" type="1"/>
@@ -136,8 +136,8 @@
     <File name="usb_lib/core/usbd_req.h" path="usb_lib/core/usbd_req.h" type="1"/>
     <File name="cmsis_lib/include/stm32f4xx_gpio.h" path="cmsis_lib/include/stm32f4xx_gpio.h" type="1"/>
     <File name="usb_lib/otg/usb_core.h" path="usb_lib/otg/usb_core.h" type="1"/>
-    <File name="usb_lib/otg/usb_dcd.c" path="usb_lib/otg/usb_dcd.c" type="1"/>
     <File name="usb_lib/core/usbd_ioreq.h" path="usb_lib/core/usbd_ioreq.h" type="1"/>
+    <File name="usb_lib/otg/usb_dcd.c" path="usb_lib/otg/usb_dcd.c" type="1"/>
     <File name="cmsis_lib/include/misc.h" path="cmsis_lib/include/misc.h" type="1"/>
     <File name="cmsis_lib/include" path="" type="2"/>
     <File name="usb_conf/usbd_desc.c" path="usb_conf/usbd_desc.c" type="1"/>

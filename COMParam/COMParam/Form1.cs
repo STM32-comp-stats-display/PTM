@@ -17,15 +17,17 @@ namespace COMParam
     {
         private static System.Timers.Timer aTimer;
         private static Computer myComputer;
+        PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time");
+        PerformanceCounter ramCounter = new PerformanceCounter();
 
         public Form1()
         {
             InitializeComponent();
+            comboBox1.SelectedIndex = 2;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            button2.Enabled = true;
             button1.Enabled = false;
 
             serialPort1.PortName = comboBox1.Text;
@@ -34,9 +36,7 @@ namespace COMParam
 
             if (serialPort1.IsOpen)
             {
-                button2.Enabled = true;
                 button1.Enabled = false;
-                textBox1.ReadOnly = false;
             }
 
             myComputer = new Computer();
@@ -48,11 +48,10 @@ namespace COMParam
             myComputer.Open();
 
             aTimer = new System.Timers.Timer(10000);    // Create a timer with a ten second interval.
-
             aTimer.Elapsed += new ElapsedEventHandler(getPCInfo);   // Hook up the Elapsed event for the timer.
-
-            aTimer.Interval = 1200; //czestotliwosc odswiezania
+            aTimer.Interval = 1000;
             aTimer.Enabled = true;
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -68,11 +67,7 @@ namespace COMParam
             {
                 serialPort1.Close();
                 button1.Enabled = true;
-                button2.Enabled = false;
-                textBox1.ReadOnly = true;
             }
-
-            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -88,47 +83,77 @@ namespace COMParam
                 if (hardwareItem.HardwareType == HardwareType.CPU)
                 {
                     hardwareItem.Update();
-                    send_str((hardwareItem.Sensors[5].Value).ToString()); //CPU TOTAL TEMP
-                    Console.WriteLine("CPU: "+(hardwareItem.Sensors[5].Value).ToString());
+                    send_str((hardwareItem.Sensors[5].Value).ToString() + "{C:"); //CPU TOTAL TEMP
+                    Console.WriteLine("CPU: " + (hardwareItem.Sensors[5].Value).ToString().Substring(0, 2));
+                    if ((int)(hardwareItem.Sensors[2].Value) < 10)
+                    {
+                        send_str("0"+(int)(hardwareItem.Sensors[2].Value) + "%:");
+                    }
+                    else
+                        send_str((int)(hardwareItem.Sensors[2].Value) + "%:");
                 }
 
                 if (hardwareItem.HardwareType == HardwareType.GpuNvidia)
                 {
                     hardwareItem.Update();
-                    send_str((hardwareItem.Sensors[0].Value).ToString()); //GPU TOTAL TEMP
-                    Console.WriteLine("GPU: "+(hardwareItem.Sensors[0].Value).ToString());
+                    send_str((hardwareItem.Sensors[0].Value).ToString() + "{C:"); //GPU TOTAL TEMP
+                    Console.WriteLine("GPU: " + (hardwareItem.Sensors[0].Value).ToString().Substring(0, 2));
                 }
 
-                //if (hardwareItem.HardwareType == HardwareType.HDD)
-                //{
-                //    send_str((hardwareItem.Sensors[0].Value).ToString()); //HDD TOTAL TEMP
-                //    Console.WriteLine("HDD: "+(hardwareItem.Sensors[0].Value).ToString());
-                //}
+                if (hardwareItem.HardwareType == HardwareType.GpuAti)
+                {
+                    hardwareItem.Update();
+                    send_str((hardwareItem.Sensors[0].Value).ToString() + "{C:"); //GPU TOTAL TEMP
+                    Console.WriteLine("GPU: " + (hardwareItem.Sensors[0].Value).ToString().Substring(0, 2));
+                }
+
+                if (hardwareItem.HardwareType == HardwareType.HDD)
+                {
+                    hardwareItem.Update();
+                    send_str((hardwareItem.Sensors[0].Value).ToString() + "{C;"); //HDD TOTAL TEMP
+                    Console.WriteLine("HDD: " + (hardwareItem.Sensors[0].Value).ToString());
+                }
+
+                if (hardwareItem.HardwareType == HardwareType.RAM)
+                {
+                    hardwareItem.Update();
+                    send_str((hardwareItem.Sensors[0].Value).ToString() + "{C;"); //HDD TOTAL TEMP
+                    Console.WriteLine("RAM: " + (hardwareItem.Sensors[0].Value).ToString());
+                }
+
+                //cpuCounter.InstanceName = "_Total";
+                //send_str((int)cpuCounter.NextValue() + ":");
+
+                //ramCounter.CounterName = "% Committed Bytes In Use";
+                //ramCounter.CategoryName = "Memory";
+                //send_str((int)ramCounter.NextValue() + ";");
             }
         }
-
+    
         private void send_str(String str)
         {
+            int iterator = 0;
+            byte[] bTab = new byte[str.Length];
+            byte[] bBufor = new byte[str.Length];
+
+            foreach (char c in str)
+            {
+                bTab[iterator] = (byte)c;
+                iterator++;
+            }
+
+            iterator = 0;
             if (!serialPort1.IsOpen) return; //jezeli port zamknięty to nie wysyłaj
-
-            //char[] buff = new char[1]; //deklaracja bufora
-
-            //buff[0] = ch;
-
-            serialPort1.Write(str);
-        }
-
-        private void send_ch(char ch)
-        {
-            if (!serialPort1.IsOpen) return; //jezeli port zamknięty to nie wysyłaj
-
-            char[] buff = new char[1]; //deklaracja bufora
-
-            buff[0] = ch;
-
-            serialPort1.Write(buff, 0, buff.Length);
-
-            //textBox1.Text = "Wysłano!";
+            foreach (char c in bTab)
+            {
+                serialPort1.Write(bTab, iterator, 1);
+                Console.WriteLine("Wysłam: " + bTab[iterator]);
+                if (bBufor[0] == bTab[0])
+                    Console.WriteLine("Potwierdzam!");
+                else
+                    Console.WriteLine("ERROR! " + bBufor);
+                iterator++;
+            }
         }
     }
 }

@@ -14,6 +14,7 @@
 #include "main.h"
 #include "lcd_5110.h"
 #include <stdlib.h>
+#include <string.h>
 
 volatile uint32_t ticker, downTicker;
 
@@ -51,12 +52,21 @@ void OTG_FS_WKUP_IRQHandler(void);
 }
 #endif
 
- void pisz(uint8_t theByte, unsigned int ch, int w)
+unsigned int ch=5,  wi=1;
+uint8_t theByte;
+
+void pisz(uint8_t theByte, int ch, int w)
  {
  		LCD5110_set_XY(ch,w);
  		LCD5110_write_char((char)(theByte+0));
- 		ch++;
  }
+
+void Delay(__IO uint32_t nCount)
+{
+  while(nCount--)
+  {
+  }
+}
 
 int main(void)
 {
@@ -69,17 +79,22 @@ int main(void)
 //LCD
 //*************************************************
 	  LCD5110_init();
-
+	  LCD5110_clear();
 	  LCD5110_set_XY(1, 0);
-	  LCD5110_write_string("TEMPERATURY ");
+	  LCD5110_write_string("  PC STATS");
 	  LCD5110_set_XY(0, 1);
 	  LCD5110_write_string("CPU: ");
 	  LCD5110_set_XY(0, 2);
-	  LCD5110_write_string("GPU: ");
+	  LCD5110_write_string("CPU LOAD: ");
 	  LCD5110_set_XY(0, 3);
+	  LCD5110_write_string("GPU:");
+	  LCD5110_set_XY(0, 4);
 	  LCD5110_write_string("HDD: ");
-	  unsigned int zn = 0, ch=5;
-	  LCD5110_write_string("Zoltem");
+	  LCD5110_set_XY(0, 5);
+	  LCD5110_write_string("RAM: ");
+
+
+
 	while (1)
 	{
 		/* Blink the orange LED at 1Hz */
@@ -93,47 +108,31 @@ int main(void)
 			GPIOD->BSRRL = GPIO_Pin_13;
 		}
 
-		/* If there's data on the virtual serial port:
-		 *  - Echo it back
-		 *  - Turn the green LED on for 10ms
-		 */
+//****************************************
 
-		uint8_t theByte;
+		int znak = 10;
+		int wiersz = 1;
 
+
+		do
 		if (VCP_get_char(&theByte))
 		{
-			VCP_put_char(theByte);
-
-//Pisanie przes³anego info
-			if(zn>=0 && zn<3)
-			{
-				pisz(theByte, ch, 1);
-				ch++;
-				zn++;
+			if(theByte==58) {
+				wiersz++;
+				znak=10;
 			}
-
-			if(zn>=3 && zn<6)
+			else
 			{
-				pisz(theByte, ch, 2);
-				ch++;
-				zn++;
+				LCD5110_set_XY(znak,wiersz);
+				if(theByte!=59) LCD5110_write_char((char)(theByte+0));
+				znak++;
 			}
-/*
-			if(zn>=9 && zn<11)
-			{
-				pisz(theByte, ch, 3);
-				ch++;
-				zn++;
-			}
-*/
-			if(zn==6)
-			{
-				zn=0;
-			}
-
 			GPIOD->BSRRL = GPIO_Pin_12;
 			downTicker = 10;
 		}
+		while(theByte!=59);
+		wiersz=1;
+
 		if (0 == downTicker)
 		{
 			GPIOD->BSRRH = GPIO_Pin_12;
